@@ -73,3 +73,4 @@ Running up on time a bit so pushing this for the time being.... can come back an
 - Customer specific s3 config + s3 keys
 - Soft deletes
 - better error handling
+- Oauth repo - sourced from databases instead of in code - allows custom client config
