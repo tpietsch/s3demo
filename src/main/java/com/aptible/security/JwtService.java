@@ -6,15 +6,18 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.time.Duration;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,9 +26,17 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public List<String> getAuthorities(String token) {
+        var claims = extractAllClaims(token);
+        if(claims == null || claims.get("authorities") == null) {
+            return List.of();
+        }
+        return List.of(((String) claims.get("authorities")).split(","));
+    }
+
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        return generateToken(Map.of("authorities", userDetails.getAuthorities().stream().map(s -> s.getAuthority()).collect(Collectors.joining(","))), userDetails);
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -43,7 +54,8 @@ public class JwtService {
     }
 
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
+        return Jwts.builder().setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + Duration.ofDays(1).toMillis()))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();

@@ -104,12 +104,12 @@ public class FileController {
 
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasRole('ORG_' + #orgId) and hasRole('CAN_DELETE')")
-    public @ResponseBody  ResponseEntity<Object>  deleteFIle(
+    public @ResponseBody  Mono<ResponseEntity<Object>>  deleteFIle(
             @PathVariable("orgId") String orgId,
             @PathVariable("id") String id) throws Exception {
         var file = fileRepository.findById(Integer.valueOf(id)).get();
         fileService.deleteFile(file);
-        return ResponseEntity.noContent().build();
+        return Mono.just(ResponseEntity.noContent().build());
     }
 
     //    TODO update....better more granular perms

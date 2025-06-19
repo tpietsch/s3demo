@@ -31,8 +31,7 @@ public class JwtAuthenticationFilter implements WebFilter {
 
             if (jwtService.isTokenValid(token)) {
                 String username = jwtService.extractUserName(token);
-                //TODO extract authorities from claim
-                var authorities = List.of("ROLE_ORG_1", "ROLE_CAN_UPLOAD", "ROLE_CAN_DOWNLOAD","ROLE_CAN_READ_FILES");
+                var authorities = jwtService.getAuthorities(token);
                 Authentication auth = new UsernamePasswordAuthenticationToken(username, null, authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList()));
 
                 return chain.filter(exchange)

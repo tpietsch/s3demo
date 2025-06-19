@@ -34,7 +34,7 @@ public class LoginController {
                 String token = jwtService.generateToken(new UserDetails() {
                     @Override
                     public Collection<? extends GrantedAuthority> getAuthorities() {
-                        var authorities = List.of("ROLE_ORG_1", "ROLE_CAN_UPLOAD", "ROLE_CAN_DOWNLOAD","ROLE_CAN_READ_FILES");
+                        var authorities = List.of("ROLE_ORG_1", "ROLE_CAN_UPLOAD", "ROLE_CAN_DOWNLOAD","ROLE_CAN_READ_FILES", "ROLE_CAN_DELETE");
                         return authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
                     }
 

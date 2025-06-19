@@ -18,6 +18,11 @@ There is a stateless version of auth under LoginController in swagger docs with 
 When provided a token from response simply place the value returned in the Authorize spot in swagger
 ![alt text](./docs/swagger_auth.png)
 
+Hardcoded role list (for now) - code search for
+```
+var authorities = List.of("ROLE_ORG_1"
+```
+
 If SSO is desired it may require some setup if using
 
 http://localhost:9000/if/flow/initial-setup/
@@ -30,6 +35,16 @@ Steps:
 - select OIDC
 - follow prompts
 - set redirect URL to http://localhost:8080/login/oauth2/code/aptible
+- create groups 
+- add user to groups
+```
+
+Groups are currently hardcoded when using the basic login (not SSO). T
+These would need to be added as groups without the role prefix to the SSO provider
+```
+var authorities = List.of("ROLE_ORG_1", "ROLE_CAN_UPLOAD", "ROLE_CAN_DOWNLOAD","ROLE_CAN_READ_FILES");
+Add the following groups
+ORG_1,CAN_UPLOAD ....
 ```
 
 when provided with clientId/Secret
@@ -56,3 +71,5 @@ Running up on time a bit so pushing this for the time being.... can come back an
 - code cleanup
 - SSO/Auth pattern clarity + lockin
 - Customer specific s3 config + s3 keys
+- Soft deletes
+- better error handling
