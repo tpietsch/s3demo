@@ -101,4 +101,6 @@ public class FileController {
                 .contentLength(content.length)
                 .body(buffer));
     }
+
+//    TODO delete/update....better more granular perms
 }
