@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    volumes:
+      - ~/apps/data2:/var/lib/postgresql/data2
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=aptible
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST_AUTH_METHOD=trust
+
