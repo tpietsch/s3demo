@@ -48,5 +48,11 @@ spring.jpa.hibernate.ddl-auto=create-drop
 #spring.jpa.hibernate.ddl-auto=update
 ```
 
-## TODO
-Running up on time a bit so pusing this for the time being.... can come back and clean things up time permitting
+## TODO/Improvements
+Running up on time a bit so pushing this for the time being.... can come back and clean things up time permitting
+
+- Paging
+- Better search interface for files - solr/elasticsearch - find by name..
+- code cleanup
+- SSO/Auth pattern clarity + lockin
+- Customer specific s3 config + s3 keys
