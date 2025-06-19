@@ -74,3 +74,4 @@ Running up on time a bit so pushing this for the time being.... can come back an
 - Soft deletes
 - better error handling
 - Oauth repo - sourced from databases instead of in code - allows custom client config
+- ... way more tests + more modules to make tests easier to write/mock
