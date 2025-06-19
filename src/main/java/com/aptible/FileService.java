@@ -33,6 +33,7 @@ import java.util.concurrent.CompletableFuture;
 public class FileService {
     final FileRepository fileRepository;
     final AppProperties appProperties;
+    //TODO - these should be client specific per request - include some cachine...
     final S3AsyncClient s3AsyncClient;
     final S3Client s3Client;
 
@@ -47,6 +48,7 @@ public class FileService {
     public Mono<FileEntity> createFile(FilePart file, final FileEntity fileEntity) throws Exception {
         fileEntity.setOriginalFileName(file.filename());
         if (appProperties.getUseS3()) {
+            //TODO rate limit per account
             return registry.rateLimiter("s3ratelimit").executeCallable(() -> file.content()
                     .reduce(0L, (sum, buf) -> sum + buf.readableByteCount()).flatMap(size -> {
                         log.info("s3 upload attempt");
