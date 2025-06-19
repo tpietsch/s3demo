@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - SSO_HOST=host.docker.internal:9000
+# TO TEST WITH s3
+#      - USE_S3=true
+#      - S3_ACCESS_KEY=...
+#      - S3_SECRET_KEY=.....
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_DB=aptible
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST_AUTH_METHOD=trust
+

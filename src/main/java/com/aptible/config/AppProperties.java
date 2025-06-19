@@ -14,4 +14,5 @@ public class AppProperties {
     private Boolean useS3;
     private String awsAccessKey;
     private String awsSecretKey;
+    private String ssoHost;
 }

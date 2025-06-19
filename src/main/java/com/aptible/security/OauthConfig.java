@@ -1,5 +1,6 @@
 package com.aptible.security;
 
+import com.aptible.config.AppProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 @Configuration
 @RequiredArgsConstructor
 public class OauthConfig {
+    private final AppProperties appProperties;
     @Bean
     public ReactiveOAuth2AuthorizedClientManager authorizedClientManager(
             ReactiveClientRegistrationRepository clientRegistrationRepository,
@@ -41,10 +43,10 @@ public class OauthConfig {
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .scope("email", "openid", "profile")
                 .registrationId("aptible")
-                .jwkSetUri("http://127.0.0.1:9000/application/o/aptible/jwks/")
-                .authorizationUri("http://127.0.0.1:9000/application/o/authorize/")
-                .tokenUri("http://127.0.0.1:9000/application/o/token/")
-                .userInfoUri("http://127.0.0.1:9000/application/o/userinfo/")
+                .jwkSetUri("http://" + appProperties.getSsoHost() + "/application/o/aptible/jwks/")
+                .authorizationUri("http://localhost:9000/application/o/authorize/")
+                .tokenUri("http://" + appProperties.getSsoHost() + "/application/o/token/")
+                .userInfoUri("http://" + appProperties.getSsoHost() + "/application/o/userinfo/")
                 .redirectUri("{baseUrl}/login/oauth2/code/{registrationId}")
                 .clientName("aptible")
                 .userNameAttributeName("email")
